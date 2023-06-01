@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SplashScreen"
+    tools:context=".LogIn"
     android:background="@color/purple_700">
 
     <ImageView
@@ -57,12 +57,12 @@
                 android:layout_marginTop="30dp"
                 android:background="@drawable/editext_bg"
                 android:drawableStart="@drawable/ic_baseline_email_24"
-                android:drawableleft="@drawable/ic_baseline_email_24"
                 android:drawablePadding="16dp"
-                android:textsize="145p"
+                android:drawableleft="@drawable/ic_baseline_email_24"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:padding="16dp" />
+                android:padding="16dp"
+                android:textsize="145p" />
 
             <EditText
                 android:layout_width="match_parent"

@@ -44,7 +44,6 @@ dependencies {
 
 //    rounded image view
     implementation 'com.makeramen:roundedimageview:2.3.0'
-
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'com.google.android.material:material:1.2.0'
 
@@ -55,5 +54,8 @@ dependencies {
 
 //    cardview
     implementation "androidx.cardview:cardview:1.0.0"
+
+//    google sign in
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
 
 }

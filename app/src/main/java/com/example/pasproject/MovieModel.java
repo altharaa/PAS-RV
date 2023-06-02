@@ -1,23 +1,25 @@
 package com.example.pasproject;
 
 public class MovieModel {
-    private String movieName;
-    private String releasedDate;
+    private String mvTitle;
+    private String mvReleasedDate;
     private String mvPoster;
     private String mvOverview;
+    private String mvLanguage;
 
-    public String getMovieName() {return movieName;}
 
-    public void setMovieName(String movieName) {
-        this.movieName = movieName;
+    public String getMovieName() {return mvTitle;}
+
+    public void setMovieName(String mvTitle) {
+        this.mvTitle = mvTitle;
     }
 
     public String getReleasedDate() {
-        return releasedDate;
+        return mvReleasedDate;
     }
 
-    public void setReleasedDate(String releasedDate) {
-        this.releasedDate = releasedDate;
+    public void setReleasedDate(String mvReleasedDate) {
+        this.mvReleasedDate = mvReleasedDate;
     }
 
     public String getMvPoster() {return mvPoster;}
@@ -27,5 +29,9 @@ public class MovieModel {
     public String getMvOverview() {return mvOverview;}
 
     public void setMvOverview(String overview) {this.mvOverview = overview;}
+
+    public String getMvLanguage() { return mvLanguage; }
+
+    public void setMvLanguage(String mvLanguage) { this.mvLanguage = mvLanguage;}
 
 }

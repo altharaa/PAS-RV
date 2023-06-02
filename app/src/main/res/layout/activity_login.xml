@@ -39,7 +39,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
-                android:fontfamily="sans-serif"
                 android:text="Welcome Back"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -59,11 +58,10 @@
                 android:background="@drawable/editext_bg"
                 android:drawableStart="@drawable/ic_baseline_email_24"
                 android:drawablePadding="16dp"
-                android:drawableleft="@drawable/ic_baseline_email_24"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:padding="16dp"
-                android:textsize="145p" />
+                android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/et_password"
@@ -76,7 +74,7 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="16dp"
-                android:textsize="145p" />
+                android:textSize="15sp" />
 
             <Button
                 android:id="@+id/btn_login"
@@ -103,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/flat_color_icons_google"
-                android:backgroundTint="@color/white"/>
+                app:backgroundTint="@color/white"/>
 
             <TextView
                 android:id="@+id/tv_register"
@@ -111,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/register_button"
                 android:textColor="@color/black"
-                android:textSizes="14sp"
+                android:textSize="15sp"
                 android:gravity="center"
                 android:layout_marginTop="25dp"/>
 

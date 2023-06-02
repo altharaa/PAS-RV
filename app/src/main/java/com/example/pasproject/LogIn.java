@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class LogIn extends AppCompatActivity {
@@ -18,6 +19,8 @@ public class LogIn extends AppCompatActivity {
     String email, password;
 
     EditText et_email;
+    EditText et_password;
+    Button btn_login;
 
 
 //    @Override

@@ -3,31 +3,58 @@ package com.example.pasproject;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.pasproject.databinding.ActivityMainListmovieBinding;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.pasproject.adapter.MovieAdapter;
+import com.example.pasproject.model.MovieModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListMovieMain extends AppCompatActivity {
+public class ListMovieMain extends AppCompatActivity{
     RecyclerView rvMovie;
-    ArrayList<MovieModel> ListDataMovie;
+//    ArrayList<MovieModel> listDataMovie;
+    MovieAdapter movieAdapter;
 
-    public void getEPLOnline() {
-        ProgressBar progressBar = findViewById(R.id.progress_bar);
-        String url = "https://api.themoviedb.org/3/movie/3?api_key=c55d7a681874ffa1020ff3ab97f8c655";
+    @Override
+    protected void onCreate(Bundle savedInstance){
+        super.onCreate(savedInstance);
+        setContentView(R.layout.activity_main_listmovie);
+//        listDataMovie = new ArrayList<>();
+//        rvMovie= findViewById(R.id.rvMovieParent);
 
+//        movieAdapter = new MovieAdapter(getApplicationContext(), listDataMovie, ListMovieMain.this);
+//        movieAdapter = new MovieAdapter(getApplicationContext(), ListMovieMain.this);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext ()) ;
+//        rvMovie.setLayoutManager(layoutManager);
+
+//        dummy data
+        List<MovieModel> movieModelList = new ArrayList<>();
+        movieModelList.add(new MovieModel("Latest Movie"));
+        movieModelList.add(new MovieModel("Recently Watched"));
+        movieModelList.add(new MovieModel("Favorites"));
+
+        setMainCategoryRecycler(movieModelList);
     }
+
+//    @Override
+//    public void onContactSelected(MovieModel model) {
+//        Toast.makeText(this, "selected movie " + model.getMovieName(), Toast.LENGTH_SHORT).show();
+//    }
+
+    private void setMainCategoryRecycler(List<MovieModel> movieModelList) {
+        rvMovie= findViewById(R.id.rvMovieParent);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this) ;
+        rvMovie.setLayoutManager(layoutManager);
+        movieAdapter = new MovieAdapter(this, movieModelList);
+        rvMovie.setAdapter(movieAdapter);
+    }
+
+//    public void getEPLOnline() {
+//        ProgressBar progressBar = findViewById(R.id.progress_bar);
+//        String url = "https://api.themoviedb.org/3/movie/3?api_key=c55d7a681874ffa1020ff3ab97f8c655";
+//
+//    }
 }

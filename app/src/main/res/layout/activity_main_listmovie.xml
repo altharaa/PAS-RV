@@ -7,15 +7,19 @@
     android:orientation="vertical"
     tools:context=".ListMovieMain">
 
-  <ProgressBar
-      android:id="@+id/progress_bar"
-      android:visibility="visible"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"/>
+<!--  <ProgressBar-->
+<!--      android:id="@+id/progress_bar"-->
+<!--      android:visibility="visible"-->
+<!--      android:layout_width="match_parent"-->
+<!--      android:layout_height="wrap_content"-->
+<!--      android:layout_marginTop="15dp"-->
+<!--     />-->
 
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/rvMovieParent"
       android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      />
 
 </LinearLayout>

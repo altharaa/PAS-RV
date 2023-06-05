@@ -10,11 +10,12 @@
         android:layout_margin="10dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/tvCategoryTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semibold"
-            android:text="Favorites"
             android:textColor="@color/black"
+            android:text="TextView"
             android:textSize="25dp"
             android:textStyle="bold" />
 

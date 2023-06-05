@@ -8,10 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.pasproject.R;
+import com.example.pasproject.model.ItemMovieModel;
 import com.example.pasproject.model.MovieModel;
 
 import java.util.List;
@@ -38,6 +40,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MainViewHold
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
         holder.tvCategoryTitle.setText(movieModelList.get(position).getCategoryTitle());
+        setItemRvMovie(holder.recyclerView, movieModelList.get(position).getItemMovieModelList());
 //        final MovieModel movieModel = this.movieModelList.get(position);
 //        holder.tvTitle.setText(movieModel.getMovieName());
 //        holder.tvReleasedDate.setText(movieModel.getReleasedDate());
@@ -53,8 +56,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MainViewHold
     }
 
     public static final class MainViewHolder extends RecyclerView.ViewHolder{
-        public TextView tvTitle, tvReleasedDate, tvOverview, tvLang, tvCategoryTitle;
-        public ImageView ivPoster;
+        public TextView tvCategoryTitle;
         RecyclerView recyclerView;
 
         public MainViewHolder(@NonNull View itemView) {
@@ -76,8 +78,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MainViewHold
         }
     }
 
+    private void setItemRvMovie(RecyclerView rvMovie, List<ItemMovieModel> itemMovieModelList){
 
-
+        ItemMovieAdapter itemMovieAdapter =  new ItemMovieAdapter(context, itemMovieModelList);
+        rvMovie.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+        rvMovie.setAdapter(itemMovieAdapter);
+    }
 
 //    public interface MovieAdapterListener {
 //        void onContactSelected (MovieModel model);

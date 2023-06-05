@@ -1,50 +1,24 @@
 package com.example.pasproject.model;
 
-public class MovieModel {
-//    private String mvTitle;
-//    private String mvReleasedDate;
-//    private String mvPoster;
-//    private String mvOverview;
-//    private String mvLanguage;
-    String categoryTitle;
+import java.util.List;
 
-//
-////    get-set Movia name/title
-//    public String getMovieName() {return mvTitle;}
-//
-//    public void setMovieName(String mvTitle) {
-//        this.mvTitle = mvTitle;
-//    }
-//
-////      get-set Movie Released date
-//    public String getReleasedDate() {
-//        return mvReleasedDate;
-//    }
-//
-//    public void setReleasedDate(String mvReleasedDate) {
-//        this.mvReleasedDate = mvReleasedDate;
-//    }
-//
-////      get-set Movie Poster
-//    public String getMvPoster() {return mvPoster;}
-//
-//    public void setMvPoster(String mvPoster) {this.mvPoster = mvPoster;}
-//
-////      get-set Movie Overview
-//    public String getMvOverview() {return mvOverview;}
-//
-//    public void setMvOverview(String overview) {this.mvOverview = overview;}
-//
-////      get-set Movie Language
-//    public String getMvLanguage() { return mvLanguage; }
-//
-//    public void setMvLanguage(String mvLanguage) { this.mvLanguage = mvLanguage;}
+public class MovieModel {
+    String categoryTitle;
+    List<ItemMovieModel> itemMovieModelList;
 
     //      constructor Category Title
-    public MovieModel(String categoryTittle) {this.categoryTitle = categoryTittle;}
+    public MovieModel(String categoryTittle,  List<ItemMovieModel> itemMovieModelList) {
+        this.categoryTitle = categoryTittle;
+        this.itemMovieModelList = itemMovieModelList;
+    }
 
     //      get-set Movie Category Title
     public String getCategoryTitle() {return categoryTitle;}
 
     public void setCategoryTitle(String categoryTitle) {this.categoryTitle = categoryTitle;}
+
+    //      get-set ArrayList
+    public List<ItemMovieModel> getItemMovieModelList() {return itemMovieModelList;}
+
+    public void setItemMovieModelList(List<ItemMovieModel> itemMovieModelList) {this.itemMovieModelList = itemMovieModelList;}
 }

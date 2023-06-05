@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.pasproject.adapter.MovieAdapter;
+import com.example.pasproject.model.ItemMovieModel;
 import com.example.pasproject.model.MovieModel;
 
 import java.util.ArrayList;
@@ -31,10 +32,19 @@ public class ListMovieMain extends AppCompatActivity{
 //        rvMovie.setLayoutManager(layoutManager);
 
 //        dummy data
+        List<ItemMovieModel> itemMovieModelList = new ArrayList<>();
+        itemMovieModelList.add(new ItemMovieModel(R.drawable.slide));
+
+        List<ItemMovieModel> itemMovieModelList1 = new ArrayList<>();
+        itemMovieModelList1.add(new ItemMovieModel(R.drawable.slide));
+
+        List<ItemMovieModel> itemMovieModelList3 = new ArrayList<>();
+        itemMovieModelList3.add(new ItemMovieModel(R.drawable.slide));
+
         List<MovieModel> movieModelList = new ArrayList<>();
-        movieModelList.add(new MovieModel("Latest Movie"));
-        movieModelList.add(new MovieModel("Recently Watched"));
-        movieModelList.add(new MovieModel("Favorites"));
+        movieModelList.add(new MovieModel("Latest Movie", itemMovieModelList));
+        movieModelList.add(new MovieModel("Recently Watched", itemMovieModelList1));
+        movieModelList.add(new MovieModel("Favorites", itemMovieModelList3));
 
         setMainCategoryRecycler(movieModelList);
     }

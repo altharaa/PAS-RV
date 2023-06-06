@@ -57,6 +57,16 @@ public class LogIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+//        if (sharedpreferences.getString(EMAIL_KEY, "") != null){
+//            Intent intent = new Intent(LogIn.this, ListMovieMain.class);
+//            startActivity(intent);
+//        }
+        sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+
+        if (!sharedpreferences.getString(EMAIL_KEY, "").equals("")){
+            Intent intent = new Intent(LogIn.this, ListMovieMain.class);
+            startActivity(intent);
+        }
 
         // connect semua komponen dengan xml nya
         eTxtEmail = (EditText) findViewById(R.id.et_email);
@@ -86,52 +96,56 @@ public class LogIn extends AppCompatActivity {
             public void onClick(View view) {
                 String username = eTxtEmail.getText().toString();
                 String password = eTxtPassword.getText().toString();
-                pbloadingBar.setVisibility(View.VISIBLE);
-                btnLogin.setEnabled(false);
+                if (username.equals("") || password.equals("")) {
+                    Toast.makeText(LogIn.this, "all fill require", Toast.LENGTH_SHORT).show();
+                } else {
+                    pbloadingBar.setVisibility(View.VISIBLE);
+                    btnLogin.setEnabled(false);
 
 //                hit api logIn
-                AndroidNetworking.post("https://mediadwi.com/api/latihan/login")
-                        .addBodyParameter("username", username)
-                        .addBodyParameter("password", password)
-                        .setPriority(Priority.MEDIUM)
-                        .build()
-                        .getAsJSONObject(new JSONObjectRequestListener() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                // Handle successful response
-                                Log.d("LogIn Success", "onResponse: " + response.toString());
-                                try {
-                                    boolean status = response.getBoolean("status");
-                                    String message = response.getString("message");
-                                    if (status) {
-                                        Toast.makeText(LogIn.this, message, Toast.LENGTH_SHORT).show();
-                                        // atau silahkan buat dialog
-                                        sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-                                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                                        editor.putString(EMAIL_KEY, username.toString());
-                                        editor.putString(PASSWORD_KEY, "");
+                    AndroidNetworking.post("https://mediadwi.com/api/latihan/login")
+                            .addBodyParameter("username", username)
+                            .addBodyParameter("password", password)
+                            .setPriority(Priority.MEDIUM)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    // Handle successful response
+                                    Log.d("LogIn Success", "onResponse: " + response.toString());
+                                    try {
+                                        boolean status = response.getBoolean("status");
+                                        String message = response.getString("message");
+                                        if (status) {
+                                            Toast.makeText(LogIn.this, message, Toast.LENGTH_SHORT).show();
+                                            // atau silahkan buat dialog
+                                            sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                            editor.putString(EMAIL_KEY, username.toString());
+                                            editor.putString(PASSWORD_KEY, "");
 
-                                        // to save our data with key and value.
-                                        editor.apply();
-                                        startActivity(new Intent(LogIn.this, ListMovieMain.class));
-                                        finish();
-                                    }else{
-                                        Toast.makeText(LogIn.this, message, Toast.LENGTH_SHORT).show();
+                                            // to save our data with key and value.
+                                            editor.apply();
+                                            startActivity(new Intent(LogIn.this, ListMovieMain.class));
+                                            finish();
+                                        }else{
+                                            Toast.makeText(LogIn.this, message, Toast.LENGTH_SHORT).show();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    pbloadingBar.setVisibility(View.GONE);
+                                    btnLogin.setEnabled(true);
                                 }
-                                pbloadingBar.setVisibility(View.GONE);
-                                btnLogin.setEnabled(true);
-                            }
 
-                            @Override
-                            public void onError(ANError anError) {
-                                // Handle error
-                                Log.e("LogIn Error", "onError: " + anError.getErrorBody(), anError);
-                                Toast.makeText(LogIn.this, "Error: " + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                                @Override
+                                public void onError(ANError anError) {
+                                    // Handle error
+                                    Log.e("LogIn Error", "onError: " + anError.getErrorBody(), anError);
+                                    Toast.makeText(LogIn.this, "Error: " + anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
             }
         });
 

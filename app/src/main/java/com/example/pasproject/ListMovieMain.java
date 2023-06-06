@@ -14,7 +14,9 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.example.pasproject.adapter.FavoriteAdapter;
 import com.example.pasproject.adapter.ItemMovieAdapter;
+import com.example.pasproject.adapter.ShowingAdapter;
 import com.example.pasproject.databinding.ActivityMainListmovieBinding;
 import com.example.pasproject.model.ItemMovieModel;
 
@@ -32,6 +34,8 @@ public class ListMovieMain extends AppCompatActivity{
     List<ItemMovieModel> itemMovieModelList1 = new ArrayList<>();
     List<ItemMovieModel> itemMovieModelList2 = new ArrayList<>();
     ItemMovieAdapter movieAdapter;
+    FavoriteAdapter movieAdapter1;
+    ShowingAdapter movieAdapter2;
     ActivityMainListmovieBinding mainListmovieBinding;
 
     @Override
@@ -40,6 +44,8 @@ public class ListMovieMain extends AppCompatActivity{
         mainListmovieBinding = ActivityMainListmovieBinding.inflate(getLayoutInflater());
         setContentView(mainListmovieBinding.getRoot());
         getAPIMovieList(1);
+        getAPIMovieList(2);
+        getAPIMovieList(3);
     }
 
     private void getAPIMovieList(int page) {
@@ -62,8 +68,14 @@ public class ListMovieMain extends AppCompatActivity{
                             getList(jsonArray);
                             if (page == 1){
                                 itemMovieModelList.addAll(getList(jsonArray));
+                            }else if (page == 2){
+                                itemMovieModelList1.addAll(getList(jsonArray));
+                            }else {
+                                itemMovieModelList2.addAll(getList(jsonArray));
                             }
-                            setMainCategoryRecycler(itemMovieModelList);
+
+                            setMainCategoryRecycler(itemMovieModelList,itemMovieModelList1,itemMovieModelList2);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -107,16 +119,18 @@ public class ListMovieMain extends AppCompatActivity{
         } return model;
     }
 
-    private void setMainCategoryRecycler(List<ItemMovieModel> movieModelList, List<ItemMovieModel> movieModels, List<ItemMovieModel> modelList) {
+    private void setMainCategoryRecycler(List<ItemMovieModel> movieModelList, List<ItemMovieModel> movieModelList1, List<ItemMovieModel> movieModelList2) {
         rvMovie= findViewById(R.id.rvMovieParent);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL,false);
         rvMovie.setLayoutManager(layoutManager);
         mainListmovieBinding.rvMovieParent1.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mainListmovieBinding.rvMovieParent2.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         movieAdapter = new ItemMovieAdapter(this, movieModelList);
+        movieAdapter1 = new FavoriteAdapter(this, movieModelList1);
+        movieAdapter2 = new ShowingAdapter(this, movieModelList2);
         rvMovie.setAdapter(movieAdapter);
-        mainListmovieBinding.rvMovieParent1.setAdapter(movieAdapter);
-        mainListmovieBinding.rvMovieParent2.setAdapter(movieAdapter);
+        mainListmovieBinding.rvMovieParent1.setAdapter(movieAdapter1);
+        mainListmovieBinding.rvMovieParent2.setAdapter(movieAdapter2);
 
 
     }

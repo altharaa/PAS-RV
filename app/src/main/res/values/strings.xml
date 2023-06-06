@@ -1,17 +1,18 @@
 <resources>
     <string name="app_name">PAS Project</string>
 
-<!--    <integer-array name="data_photo">-->
-<!--        <item>@drawable/slider_img_1</item>-->
-<!--        <item>@drawable/slider_img_2</item>-->
-<!--        <item>@drawable/slider_img_3</item>-->
-<!--    </integer-array>-->
+    <!--    <integer-array name="data_photo">-->
+    <!--        <item>@drawable/slider_img_1</item>-->
+    <!--        <item>@drawable/slider_img_2</item>-->
+    <!--        <item>@drawable/slider_img_3</item>-->
+    <!--    </integer-array>-->
 
-<!--    <string-array name="data_nama">-->
-<!--        <item>1</item>-->
-<!--        <item>2</item>-->
-<!--        <item>3</item>-->
-<!--    </string-array>-->
+    <!--    <string-array name="data_nama">-->
+    <!--        <item>1</item>-->
+    <!--        <item>2</item>-->
+    <!--        <item>3</item>-->
+    <!--    </string-array>-->
 
     <string name="register_button">Don\'t have any account? <b>Register Here</b></string>
+    <string name="client_id">854153843366-oplpsj59vhoifplo6f848p5mie0t27ht.apps.googleusercontent.com</string>
 </resources>

@@ -1,15 +1,65 @@
 package com.example.pasproject.model;
 
+
 public class ItemMovieModel {
 
-    int mvPoster;
+    int id;
+    String mvTitle;
+    String mvOverview;
+    String mvPOster;
+    String mvReleasedDate;
+    String mvLanguage;
+    String mvVoteAvg;
 
-    public ItemMovieModel(int mvPoster) {this.mvPoster = mvPoster;}
+    public int getId() {return id;}
 
-    //    get-set Movie Poster
-    public int getMvPoster() {return mvPoster;}
+    public void setId(int id) {this.id = id;}
 
-    public void setMvPoster(String mvPoster) {this.mvPoster = Integer.parseInt(mvPoster);}
+    public String getMvTitle() {
+        return mvTitle;
+    }
+
+    public void setMvTitle(String mvTitle) {
+        this.mvTitle = mvTitle;
+    }
+
+    public String getMvOverview() {
+        return mvOverview;
+    }
+
+    public void setMvOverview(String mvOverview) {
+        this.mvOverview = mvOverview;
+    }
+
+    public String getMvPOster() {
+        return mvPOster;
+    }
+
+    public void setMvPOster(String mvPOster) {
+        this.mvPOster = mvPOster;
+    }
+
+    public String getMvReleasedDate() {
+        return mvReleasedDate;
+    }
+
+    public void setMvReleasedDate(String mvReleasedDate) {
+        this.mvReleasedDate = mvReleasedDate;
+    }
+
+    public String getMvLanguage() {
+        return mvLanguage;
+    }
+
+    public void setMvLanguage(String mvLanguage) {this.mvLanguage = mvLanguage;}
+
+    public String getMvVoteAvg() {
+        return mvVoteAvg;
+    }
+
+    public void setMvVoteAvg(String mvVoteAvg) {
+        this.mvVoteAvg = mvVoteAvg;
+    }
 
 
 }

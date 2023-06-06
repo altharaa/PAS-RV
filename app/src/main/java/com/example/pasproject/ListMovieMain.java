@@ -5,66 +5,121 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.pasproject.adapter.MovieAdapter;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.example.pasproject.adapter.ItemMovieAdapter;
+import com.example.pasproject.databinding.ActivityMainListmovieBinding;
 import com.example.pasproject.model.ItemMovieModel;
-import com.example.pasproject.model.MovieModel;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ListMovieMain extends AppCompatActivity{
     RecyclerView rvMovie;
-//    ArrayList<MovieModel> listDataMovie;
-    MovieAdapter movieAdapter;
+    List<ItemMovieModel> itemMovieModelList = new ArrayList<>();
+    List<ItemMovieModel> itemMovieModelList1 = new ArrayList<>();
+    List<ItemMovieModel> itemMovieModelList2 = new ArrayList<>();
+    ItemMovieAdapter movieAdapter;
+    ActivityMainListmovieBinding mainListmovieBinding;
 
     @Override
     protected void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
-        setContentView(R.layout.activity_main_listmovie);
-//        listDataMovie = new ArrayList<>();
-//        rvMovie= findViewById(R.id.rvMovieParent);
-
-//        movieAdapter = new MovieAdapter(getApplicationContext(), listDataMovie, ListMovieMain.this);
-//        movieAdapter = new MovieAdapter(getApplicationContext(), ListMovieMain.this);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext ()) ;
-//        rvMovie.setLayoutManager(layoutManager);
-
-//        dummy data
-        List<ItemMovieModel> itemMovieModelList = new ArrayList<>();
-        itemMovieModelList.add(new ItemMovieModel(R.drawable.slide));
-
-        List<ItemMovieModel> itemMovieModelList1 = new ArrayList<>();
-        itemMovieModelList1.add(new ItemMovieModel(R.drawable.slide));
-
-        List<ItemMovieModel> itemMovieModelList3 = new ArrayList<>();
-        itemMovieModelList3.add(new ItemMovieModel(R.drawable.slide));
-
-        List<MovieModel> movieModelList = new ArrayList<>();
-        movieModelList.add(new MovieModel("Latest Movie", itemMovieModelList));
-        movieModelList.add(new MovieModel("Recently Watched", itemMovieModelList1));
-        movieModelList.add(new MovieModel("Favorites", itemMovieModelList3));
-
-        setMainCategoryRecycler(movieModelList);
+        mainListmovieBinding = ActivityMainListmovieBinding.inflate(getLayoutInflater());
+        setContentView(mainListmovieBinding.getRoot());
+        getAPIMovieList(1);
     }
 
-//    @Override
-//    public void onContactSelected(MovieModel model) {
-//        Toast.makeText(this, "selected movie " + model.getMovieName(), Toast.LENGTH_SHORT).show();
-//    }
+    private void getAPIMovieList(int page) {
+        ProgressBar progressBar = findViewById(R.id.progress_bar);
+        AndroidNetworking.get("https://api.themoviedb.org/3/movie/popular?page="+page+"&api_key=9e96256f5d1e6a4f9c415b852558c8d2")
+                .setTag("test")
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        });
+                        try {
+                            JSONArray jsonArray = jsonObject.getJSONArray("results");
+                            getList(jsonArray);
+                            if (page == 1){
+                                itemMovieModelList.addAll(getList(jsonArray));
+                            }
+                            setMainCategoryRecycler(itemMovieModelList);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
-    private void setMainCategoryRecycler(List<MovieModel> movieModelList) {
+                    @Override
+                    public void onError(ANError anError) {
+                        Log. d( "failed ",  "onError: "+ anError.toString());
+                    }
+                });
+    }
+
+    private List<ItemMovieModel> getList(JSONArray jsonArray) {
+        List<ItemMovieModel> model = new ArrayList<>();
+        for (int i= 0; i < jsonArray.length(); i++) {
+            JSONObject movie = null;
+            try {
+                movie = jsonArray.getJSONObject(i);
+                String title = movie.getString("title");
+                String overview = movie.getString("overview");
+                String releasedDt = movie.getString("release_date");
+                String voteAvg = movie.getString("vote_average");
+                String language = movie.getString("original_language");
+                String image = movie.getString("poster_path");
+                int id = movie.getInt("id");
+
+                ItemMovieModel movieModel = new ItemMovieModel();
+                movieModel.setMvTitle(title);
+                movieModel.setMvOverview(overview);
+                movieModel.setMvReleasedDate(releasedDt);
+                movieModel.setMvVoteAvg(voteAvg);
+                movieModel.setMvLanguage(language);
+                movieModel.setMvPOster(image);
+                movieModel.setId(id);
+
+                model.add(movieModel);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        } return model;
+    }
+
+    private void setMainCategoryRecycler(List<ItemMovieModel> movieModelList, List<ItemMovieModel> movieModels, List<ItemMovieModel> modelList) {
         rvMovie= findViewById(R.id.rvMovieParent);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this) ;
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL,false);
         rvMovie.setLayoutManager(layoutManager);
-        movieAdapter = new MovieAdapter(this, movieModelList);
+        mainListmovieBinding.rvMovieParent1.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        mainListmovieBinding.rvMovieParent2.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        movieAdapter = new ItemMovieAdapter(this, movieModelList);
         rvMovie.setAdapter(movieAdapter);
+        mainListmovieBinding.rvMovieParent1.setAdapter(movieAdapter);
+        mainListmovieBinding.rvMovieParent2.setAdapter(movieAdapter);
+
+
     }
 
-//    public void getEPLOnline() {
-//        ProgressBar progressBar = findViewById(R.id.progress_bar);
-//        String url = "https://api.themoviedb.org/3/movie/3?api_key=c55d7a681874ffa1020ff3ab97f8c655";
-//
-//    }
+
 }
